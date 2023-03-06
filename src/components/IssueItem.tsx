@@ -1,20 +1,25 @@
 import { useQuery } from "react-query";
-import { getIssueListResults, IissueItem } from "../api";
+import { getIssueListResults, Iissue } from "../api";
 
 interface Ipage {
     page: number;
 }
 
 function IssueItem({ page }: Ipage) {
-    const {data, isLoading} = useQuery<IissueItem>(
-        ['angular', page], 
+    const {data, isLoading} = useQuery<Iissue[]>(
+        [`angular${page}`, page], 
         () => getIssueListResults(page)
     );
 
     return (<>
-        {isLoading ? <div>Loading...</div> : (
+        {!isLoading && (
            <div>
-                
+                {data?.map((content) => <div>
+                    {content.number}
+                    {content.title}
+                    {content.user.login}
+                    {content.comments}
+                </div>)}
            </div>
         )}
     </>);

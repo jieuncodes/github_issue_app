@@ -1,16 +1,8 @@
 import { Helmet } from "react-helmet";
-import { Octokit} from "octokit";
 import { Loader } from "../utils/globalStyles";
 import { useState } from "react";
 import styled from "styled-components";
 import IssueItem from "../components/IssueItem";
-import axios from "axios";
-
-const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
-const HOST_URL = process.env.REACT_REACT_APP_HOST_URL;
-const ORG_NAME = 'Angular';
-const REPO_NAME = 'Angular-cli';
-const CONTENT_TYPE = "application/vnd.github+json";
 
 const Modal = styled.div`
     position: fixed;
@@ -41,17 +33,18 @@ const GetButton = styled.button`
 
 function ListIssues() {
     const [isLoading, setIsLoading] = useState(null || false);
-    const [issueList, setIssueList] = useState(null || [] as number[]);
-    const [contentPage, setContentPage] = useState(0);
+    const [issueList, setIssueList] = useState(null || [1]);
+    const [contentPage, setContentPage] = useState(2);
     
 
     const getIssueList = () => {
         setContentPage((prev) => prev += 1);
-        setIssueList((prev) => prev.push(contentPage) as unknown as number[]);
+        const newList = [...issueList, contentPage];
+        setIssueList(newList);
         setIsLoading(true);
         setTimeout(() => {
             setIsLoading(false);
-        }, 2000)
+        }, 1000)
     }
     
     
@@ -59,12 +52,13 @@ function ListIssues() {
         <Helmet>
             <title>List Issues</title>
         </Helmet>
-        {isLoading? (
-            <Modal>issue 10개 로딩 시작</Modal>
-        ) : (
-            issueList?.map((issue) => <IssueItem key={issue} page={issue} />)
-        )}
-       
+        {issueList.length > 1 && <>
+            {isLoading? (
+                <Modal>issue 10개 로딩 시작</Modal>
+            ) : (
+                issueList.slice(0, issueList.length - 1)?.map((issue) => <IssueItem key={issue} page={issue} />)
+            )}
+        </>}
         <GetButton onClick={getIssueList}>
             {isLoading ? (
                 <Loader>

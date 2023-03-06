@@ -3,9 +3,6 @@ const HOST_URL = process.env.REACT_REACT_APP_HOST_URL;
 const ORG_NAME = 'Angular';
 const REPO_NAME = 'Angular-cli';
 
-export interface IissueItem {
-    issueItem: Iissue[];
-}
 interface IUser {
     login: string;
 }
