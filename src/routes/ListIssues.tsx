@@ -14,8 +14,9 @@ const CONTENT_TYPE = "application/vnd.github+json";
 
 const Modal = styled.div`
     position: fixed;
+    left: 50%;
     top: 50%;
-    margin: 0 auto;
+    transform: translate(-50%, -50%);
     border-radius: 8px;
     width: 300px;
     height: 100px;
@@ -37,11 +38,6 @@ const GetButton = styled.button`
         width: 200px;
     }
 `;
-
-interface IGetIssueList {
-
-}
-
 
 function ListIssues() {
     const [isLoading, setIsLoading] = useState(null || false);
