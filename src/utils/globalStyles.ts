@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
     html, body, div, span, applet, object, iframe,
@@ -43,15 +43,6 @@ export const GlobalStyle = createGlobalStyle`
         text-decoration: none;
     }
     button { cursor: pointer; }
-    code {
-        padding: 2px 6px;
-        border: 1px solid #172334;
-        margin: 0 2px 0 0;
-        border-radius: 0.25rem;
-        background-color: #202B3D;
-        color: #CDD7E0;
-        font-family: Hack, Menlo, Monaco, Consolas, "Courier New", monospace, "맑은 고딕", malgun gothic, "돋움", Dotum, Sans-Serif;
-    }
     body {
         font-weight: 400;
         font-family: 'Poppins', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, Helvetica Neue, Segoe UI, Roboto, Ubuntu, sans-serif;
@@ -469,4 +460,72 @@ export const BasicStyle = createGlobalStyle`
         align-self: end !important;
     }      
     .text-center {text-align: center !important}
+`;
+
+export const PageContainer = styled.div`
+    min-height: calc(100vh - 60px);
+    padding-top: 60px;
+    @media only screen and (min-width: 768px) {
+        min-height: calc(100vh - 80px);
+        padding-top: 80px;
+    }
+    @media only screen and (min-width: 1200px) {
+        min-height: calc(100vh - 100px);
+        padding-top: 100px;
+    }
+`;
+
+export const Loader = styled.div`
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    height: 100%;
+    div {
+        display: inline-block;
+        position: relative;
+        width: 40px;
+        height: 40px;
+        margin: 0 auto;
+        div {
+            position: absolute;
+            border: 2px solid #fff;
+            opacity: 1;
+            border-radius: 50%;
+            animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+        }
+        div:nth-child(2) {
+            animation-delay: -0.5s;
+        }
+    }
+    @keyframes lds-ripple {
+        0% {
+            top: 18px;
+            left: 18px;
+            width: 0;
+            height: 0;
+            opacity: 0;
+        }
+        4.9% {
+            top: 18px;
+            left: 18px;
+            width: 0;
+            height: 0;
+            opacity: 0;
+        }
+        5% {
+            top: 18px;
+            left: 18px;
+            width: 0;
+            height: 0;
+            opacity: 1;
+        }
+        100% {
+            top: 0px;
+            left: 0px;
+            width: 36px;
+            height: 36px;
+            opacity: 0;
+        }
+    }
 `;

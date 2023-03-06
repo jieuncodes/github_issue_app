@@ -1,6 +1,7 @@
 import { createHashRouter } from "react-router-dom";
 import App from "./App";
-import Home from "./routes/Home";
+import DetailIssue from "./routes/DetailIssue";
+import ListIssues from "./routes/ListIssues";
 // routes
 
 
@@ -11,7 +12,13 @@ const router = createHashRouter([
         children: [
             {
                 path: "",
-                element: <Home />,
+                element: <ListIssues />,
+                children: [
+                    {
+                        path: ":id",
+                        element: <DetailIssue />,
+                    },
+                ],
             },
         ],
     }
