@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/github_issue_app/static/js/main.6aec5271.js",
+    "index.html": "/github_issue_app/index.html",
+    "main.6aec5271.js.map": "/github_issue_app/static/js/main.6aec5271.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.6aec5271.js"
+  ]
+}
