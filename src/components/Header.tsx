@@ -1,4 +1,6 @@
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { issueNameState } from "../atoms";
 
 const HeaderContainer = styled.header`
     display: flex;
@@ -26,8 +28,11 @@ const Title = styled.h1`
 `;
 
 function Header() {
+    const getIssueNames = useRecoilValue(issueNameState);
+    const defaultIssueName = getIssueNames[0];
+
     return <HeaderContainer>
-        <Title>Angular / Angular-cli</Title>
+        <Title>{defaultIssueName.org} / {defaultIssueName.rep}</Title>
     </HeaderContainer>;
 }
 
