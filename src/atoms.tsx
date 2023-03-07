@@ -1,4 +1,5 @@
 import { atom } from "recoil";
+import { recoilPersist } from 'recoil-persist';
 
 interface IIssueName {
     org: string;
@@ -8,6 +9,7 @@ interface IUser {
     login: string;
 }
 export interface Iissue {
+    id: number;
     number: number;
     title: string;
     created_at: string;
@@ -18,6 +20,11 @@ export interface IIssueList {
     page?: number;
     issueList: Iissue[];
 }
+
+const { persistAtom } = recoilPersist({
+    key: 'issueListSet',
+    storage: localStorage,
+});
 
 export const issueNameState = atom<IIssueName[]>({
     key: "issueName",
@@ -32,4 +39,5 @@ export const issueNameState = atom<IIssueName[]>({
 export const issueListSetState = atom<IIssueList[]>({
     key: "issueListSet",
     default: [],
+    effects_UNSTABLE: [persistAtom],
 });

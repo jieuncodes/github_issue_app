@@ -15,7 +15,7 @@ const router = createHashRouter([
                 element: <ListIssues />,
                 children: [
                     {
-                        path: ":id",
+                        path: "issue/:id",
                         element: <DetailIssue />,
                     },
                 ],

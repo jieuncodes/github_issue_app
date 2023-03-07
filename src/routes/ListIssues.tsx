@@ -1,17 +1,17 @@
 import { Helmet } from "react-helmet";
 import { Octokit } from "octokit";
+import { useScroll } from "framer-motion";
 import { Loader } from "../utils/globalStyles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import IssueItem from "../components/IssueItem";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { issueListSetState, issueNameState, IIssueList } from "../atoms";
 
-const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
 const CONTENT_TYPE = "application/json";
 
 const octokit = new Octokit({ 
-    auth: GITHUB_TOKEN,
+    auth: process.env.REACT_APP_GITHUB_TOKEN,
 });
 
 const Modal = styled.div`
@@ -74,6 +74,9 @@ function ListIssues() {
     const defaultIssueName = getIssueNames[0];
     const [isLoading, setIsLoading] = useState(false);
     const [contentPage, setContentPage] = useState(1);
+    const { scrollY } = useScroll();
+    
+    useEffect(() => window.scrollTo(0, 0), []);
     
     const settingIssueList = ({ page, issueList }: IIssueList) => {
         const newIssueList = {
@@ -141,8 +144,6 @@ function ListIssues() {
             {issueListSet && 
             issueListSet.map((issueSet, i) => 
             <IssueItem key={i} issueList={issueSet.issueList} />)}
-
-            
         </div>
 
         {/* ---------------------------[버튼 영역]---------------------------- */}

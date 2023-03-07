@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { IIssueList } from "../atoms";
 
@@ -5,6 +6,7 @@ const AD_PATH = 'https://hellobot-test.s3.ap- northeast-2.amazonaws.com/image/01
 const AD_LINK = 'https://thingsflow.com/ko/home';
 const AdImg = styled.img`
     width: 100%;
+    margin-botto: 15px;
     @media only screen and (min-width: 768px) {
         width: 300px;
     }
@@ -42,23 +44,25 @@ function IssueItem({ issueList }: IIssueList) {
     return (<>
         {issueList &&
         issueList.map((issueItem) => 
-        <IssueBox key={issueItem.number}>
-            <div className="row">
-                <div className="col-9">
-                    <div>
-                        <Span>#{issueItem.number}</Span> 
-                        <IssueTitle>{issueItem.title}</IssueTitle>
+        <Link key={issueItem.id} to={'issue/' + issueItem.id}>
+            <IssueBox>
+                <div className="row">
+                    <div className="col-9">
+                        <div>
+                            <Span>#{issueItem.number}</Span> 
+                            <IssueTitle>{issueItem.title}</IssueTitle>
+                        </div>
+                        <div>
+                            <Span>writer: {issueItem.user.login}</Span>
+                            <Span>date: {issueItem.created_at.slice(0, 10)}</Span>
+                        </div>
                     </div>
-                    <div>
-                        <Span>writer: {issueItem.user.login}</Span>
-                        <Span>date: {issueItem.created_at.slice(0, 10)}</Span>
+                    <div className="col-3 text-center align-self-center">
+                        <Span>comment : {issueItem.comments}</Span>
                     </div>
                 </div>
-                <div className="col-3 text-center align-self-center">
-                    <Span>comment : {issueItem.comments}</Span>
-                </div>
-            </div>
-        </IssueBox>)}
+            </IssueBox>
+        </Link>)}
         {/* ----------------------------[광고 영역]---------------------------- */}
         <a href={AD_LINK} rel="noopener noreferrer">
             <AdImg src={AD_PATH + ',' + process.env.PUBLIC_URL + 'no_image.jpg'} /> 
