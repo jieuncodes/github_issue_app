@@ -50,6 +50,21 @@ export const GlobalStyle = createGlobalStyle`
         background-color: black;
         line-height: 1.2;
     }
+    .page-container {
+        min-height: 100vh;
+        padding: 60px ${(props) => props.theme.screenPadding.mobile}px;
+    }
+   
+    @media (min-width: 768px) {
+        .page-container {
+            padding: 80px ${(props) => props.theme.screenPadding.tablet}px;
+        }
+    }
+    @media (min-width: 1200px) {
+        .page-container {
+            padding: 100px ${(props) => props.theme.screenPadding.pc}px;
+        }
+    }
 `;
 
 export const BasicStyle = createGlobalStyle`
@@ -460,19 +475,6 @@ export const BasicStyle = createGlobalStyle`
         align-self: end !important;
     }      
     .text-center {text-align: center !important}
-`;
-
-export const PageContainer = styled.div`
-    min-height: calc(100vh - 60px);
-    padding-top: 60px;
-    @media only screen and (min-width: 768px) {
-        min-height: calc(100vh - 80px);
-        padding-top: 80px;
-    }
-    @media only screen and (min-width: 1200px) {
-        min-height: calc(100vh - 100px);
-        padding-top: 100px;
-    }
 `;
 
 export const Loader = styled.div`
