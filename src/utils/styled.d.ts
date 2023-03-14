@@ -4,7 +4,11 @@ import 'styled-components';
 // and extend them!
 declare module 'styled-components' {
   export interface DefaultTheme {
-    green: string;
+    green: {
+      darker: string;
+      lighter: string;
+    },
+    red: string;
     black: {
       veryDark: string;
       darker: string;

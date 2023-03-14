@@ -1,14 +1,16 @@
 import { Helmet } from "react-helmet";
 import { Octokit } from "octokit";
-import { useScroll } from "framer-motion";
 import { Loader } from "../utils/globalStyles";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import IssueItem from "../components/IssueItem";
+import IssueItems from "../components/IssueItems";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { issueListSetState, issueNameState, IIssueList } from "../atoms";
+import { orgIssueListSetState, selectedOrgState, Iissue } from "../atoms";
 
-const CONTENT_TYPE = "application/json";
+const RESPONSE_CONTENT_TYPE = "application/json";
+const RESPONSE_STATE = "open";
+const RESPONSE_SORT = "comments";
+const RESPONSE_PER_PAGE = 10;
 
 const octokit = new Octokit({ 
     auth: process.env.REACT_APP_GITHUB_TOKEN,
@@ -58,65 +60,80 @@ const Button = styled.button`
     }
 `;
 const GetButton = styled(Button)`
-    border-color: ${props => props.theme.green};
-    background-color: ${props => props.theme.green};
+    border-color: ${props => props.theme.green.darker};
+    background-color: ${props => props.theme.green.darker};
     color: ${props => props.theme.white.lighter};
 `;
 const ResetButton = styled(Button)`
     border-color: ${props => props.theme.white.lighter};
     background-color: ${props => props.theme.white.lighter};
-    color: ${props => props.theme.green};
+    color: ${props => props.theme.green.darker};
 `;
 
+interface INewIssueListSet {
+    setId: string;
+    page: number;
+    issueList: Iissue[];
+}
+
 function ListIssues() {
-    const getIssueNames = useRecoilValue(issueNameState);
-    const [issueListSet, setIssueListSet] = useRecoilState(issueListSetState);
-    const defaultIssueName = getIssueNames[0];
+    const [orgIssueListSet, setOrgIssueListSet] = useRecoilState(orgIssueListSetState);
+    const selectedIssueOrg = useRecoilValue(selectedOrgState);
     const [isLoading, setIsLoading] = useState(false);
     const [contentPage, setContentPage] = useState(1);
-    const { scrollY } = useScroll();
     
     useEffect(() => window.scrollTo(0, 0), []);
     
-    const settingIssueList = ({ page, issueList }: IIssueList) => {
+    const settingIssueList = ({ setId, page, issueList }: INewIssueListSet) => {
         const newIssueList = {
             page,
             issueList,
         };
-        setIssueListSet((oldList) => {
-            let newList = [];
-            if(oldList.length > 0) {
-                newList = [...oldList, newIssueList];
-            } else {
-                newList = [newIssueList];
+        setOrgIssueListSet((oldOrgListSet) => {
+            let newIssueListSet = {
+                setId,
+                issueListSet: [newIssueList],
+            };
+            if(oldOrgListSet.length > 0) {
+                for(let i = 0; i < oldOrgListSet.length; i++) {
+                    if(oldOrgListSet[i].setId === setId) {
+                        oldOrgListSet[i].issueListSet.push(newIssueList);
+                        newIssueListSet.issueListSet = oldOrgListSet[i].issueListSet;
+                        break;
+                    }
+                }
             }
-            return newList;
+            
+            
+            return newOrgListSet;
         });
         setContentPage((prev) => prev += 1);
     };
 
     const getIssueList = async (page : number) => {        
+        document.body.scrollIntoView({behavior: 'smooth', block: 'end'});
         try {
             setIsLoading(true);
             setTimeout(() => {
                 setIsLoading(false);
             }, 1000);
             const response = await octokit.request("GET /repos/{owner}/{repo}/issues", {
-                owner: defaultIssueName.org,
-                repo: defaultIssueName.rep,
-                state: "open",
-                sort: "comments",
-                per_page: 10,
+                owner: selectedIssueOrg.org,
+                repo: selectedIssueOrg.rep,
+                state: RESPONSE_STATE,
+                sort: RESPONSE_SORT,
+                per_page: RESPONSE_PER_PAGE, 
                 page,
                 headers: {
-                    "content-type": CONTENT_TYPE,
+                    "content-type": RESPONSE_CONTENT_TYPE,
                 },
             });
 
             const args = {
+                setId: selectedIssueOrg.setId,
                 page,
                 issueList: response.data
-            } as IIssueList;
+            } as INewIssueListSet;
             settingIssueList(args);
 
             const successMsg = `Success! Status: ${response.status}. 
@@ -129,7 +146,7 @@ function ListIssues() {
     }; 
     
     const handleReset = () => {
-        setIssueListSet([]);
+        orgIssueListSet([]);
         setContentPage(1);
     };
 
@@ -141,9 +158,9 @@ function ListIssues() {
 
         {/* ---------------------------[이슈 리스트]--------------------------- */}
         <div className="page-container">
-            {issueListSet && 
-            issueListSet.map((issueSet, i) => 
-            <IssueItem key={i} issueList={issueSet.issueList} />)}
+            {orgIssueListSet && 
+            orgIssueListSet.map((issueSet, i) => 
+            <IssueItems key={i} issueList={issueSet.issueList} />)}
         </div>
 
         {/* ---------------------------[버튼 영역]---------------------------- */}

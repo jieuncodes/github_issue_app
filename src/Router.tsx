@@ -13,13 +13,10 @@ const router = createHashRouter([
             {
                 path: "",
                 element: <ListIssues />,
-                children: [
-                    {
-                        path: "issue/:id",
-                        element: <DetailIssue />,
-                    },
-                ],
-            },
+            },{
+                path: "issue/:id",
+                element: <DetailIssue />,
+            }
         ],
     }
 ]);

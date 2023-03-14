@@ -1,6 +1,5 @@
-import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { issueNameState } from "../atoms";
+import SelectIssueOrg from "./SelectIssueOrg";
 
 const HeaderContainer = styled.header`
     position: fixed;
@@ -33,11 +32,8 @@ const Title = styled.h1`
 `;
 
 function Header() {
-    const getIssueNames = useRecoilValue(issueNameState);
-    const defaultIssueName = getIssueNames[0];
-
     return <HeaderContainer>
-        <Title>{defaultIssueName.org} / {defaultIssueName.rep}</Title>
+        <Title><SelectIssueOrg /></Title>
     </HeaderContainer>;
 }
 
