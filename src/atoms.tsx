@@ -38,7 +38,6 @@ export const issueNameState = atom<IIssueName>({
         "reactjs": ["reactjs.org"],
         "Angular": ["angular", "components", "angular-cli"],
         "microsoft": ["TypeScript", "vscode"],
-        "Redux": ["redux", "react-redux"],
     },
 });
 
@@ -50,7 +49,7 @@ export const selectedOrgState = atom<ISelectedOrg>({
         rep: "components",
     },
     effects_UNSTABLE: [persistAtom],
-})
+});
 
 export const orgIssueListSetState = atom<IOrgIssueList>({
     key: "issueListSet",
