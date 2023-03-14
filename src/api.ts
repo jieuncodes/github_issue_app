@@ -1,6 +1,6 @@
-const RESPONSE_CONTENT_TYPE = "application/json";
+export const CONTENT_TYPE = "application/json";
+export const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
 const HOST_URL = process.env.REACT_APP_HOST_URL;
-const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
 
 interface IReactions {
     [key: string]: number;
@@ -23,7 +23,7 @@ export function getIssueDetail(owner: string, repo: string, issue_number: number
     return fetch(`${HOST_URL}/repos/${owner}/${repo}/issues/${issue_number}`, {
         headers: {
             Authorization: `token ${GITHUB_TOKEN}`,
-            "content-type": RESPONSE_CONTENT_TYPE,
+            "content-type": CONTENT_TYPE,
         },
     }).then((response) => {
         if (!response.ok) throw new Error(response.statusText);

@@ -9,17 +9,17 @@ import { Loader } from "../utils/globalStyles";
 
 function DetailIssue() {
     const { id } = useParams();
-    const selectedIssueOrg = useRecoilValue(selectedOrgState);
+    const selectedOrg = useRecoilValue(selectedOrgState);
 
     const { data, isLoading } = useQuery<IIssueDetails>(
         ["issue", id],
-        () => getIssueDetail(selectedIssueOrg.org, selectedIssueOrg.rep, Number(id))
+        () => getIssueDetail(selectedOrg.org, selectedOrg.rep, Number(id))
     );
     
-    /**
-     * Octokit과 useEffect를 이용하여 데이터 불러오기
-     * useEffect 안에서 fetch 함수를 한번 불러옴.
-     **/
+    
+    // Octokit과 useEffect를 이용하여 데이터 불러오기
+    // useEffect 안에서 fetch 함수를 한번 불러옴.
+    
     // useEffect(() => {
     //     const fetchData = async () => {
     //         const response = await octokit.rest.issues.get({
