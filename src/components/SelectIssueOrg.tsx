@@ -18,49 +18,42 @@ const Select = styled.select`
 
 function SelectIssueOrg() {
     const getIssueNames = useRecoilValue(issueNameState);
-    const [issueOrg, setIssueOrg] = useRecoilState(selectedOrgState);
-    const orgId = Number(issueOrg.setId.split('_')[0]);
-    const [issueRepList, setIssueRepList] = useState(getIssueNames[orgId].rep);
+    const [selectedOrg, setSelectedOrg] = useRecoilState(selectedOrgState);
+    const [issueRepList, setIssueRepList] = useState(getIssueNames[selectedOrg.org]);
 
-    const handleOrgChange = (event : any) => {
-        const value = event.target.value;
-        const newIssueRepList = getIssueNames[value].rep;
+    const handleOrgChange = (event:React.FormEvent<HTMLSelectElement>) => {
+        const value = event.currentTarget.value as string;
+        const newIssueRepList = getIssueNames[value];
         setIssueRepList(newIssueRepList);
         const newIssueOrg = {
             setId: `${value}_0`,
-            org: getIssueNames[value].org,
+            org: value,
             rep: newIssueRepList[0],
         }
-        setIssueOrg(newIssueOrg);
+        setSelectedOrg(newIssueOrg);
     };
-    const handleRepChange = (event : any) => {
-        const value = event.target.value;
-        setIssueOrg((prevOrg) => {
+    const handleRepChange = (event:React.FormEvent<HTMLSelectElement>) => {
+        const value = event.currentTarget.value;
+        setSelectedOrg((prevOrg) => {
             const newOrg = {
-                setId: `${orgId}_${value}`,
+                setId: `${prevOrg.org}_${value}`,
                 org: prevOrg.org,
-                rep: getIssueNames[orgId].rep[value],
+                rep: getIssueNames[prevOrg.org][+value],
             }
             return newOrg;
         });
     };
     return (<>
-        <Select onChange={handleOrgChange}>
-            {getIssueNames.map((issue, i) => 
-                <option key={issue.org}
-                    value={i} 
-                    defaultValue={issueOrg.org}
-                    selected={issue.org === issueOrg.org}>
-                    {issue.org}
+        <Select defaultValue={selectedOrg.org} onChange={handleOrgChange}>
+            {Object.keys(getIssueNames).map((orgName) => 
+                <option key={orgName} value={orgName} >
+                    {orgName}
                 </option>
             )}
         </Select>
-        <Select onChange={handleRepChange}>
+        <Select defaultValue={selectedOrg.rep} onChange={handleRepChange}>
             {issueRepList.map((rep, i) => 
-                <option key={rep}
-                    value={i} 
-                    defaultValue={issueOrg.rep}
-                    selected={rep === issueOrg.rep}>
+                <option key={rep} value={i} >
                     {rep}
                 </option>
             )}

@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { IIssueList } from "../atoms";
@@ -7,9 +6,6 @@ const AD_PATH = `${process.env.PUBLIC_URL}/lazy_sleep.png`;
 const AD_ERROR_PATH = `${process.env.PUBLIC_URL}/no_image.jpg`;
 const AD_LINK = 'https://github.com/eee0930/github_issue_app';
 
-const IssueContentContainer = styled.div`
-    width: 100%;
-`;
 const AdImg = styled.img`
     height: 65px;
     width: auto;

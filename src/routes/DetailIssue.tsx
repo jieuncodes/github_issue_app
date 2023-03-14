@@ -13,9 +13,25 @@ function DetailIssue() {
 
     const { data, isLoading } = useQuery<IIssueDetails>(
         ["issue", id],
-        () => getIssueDetail(selectedIssueOrg.org, selectedIssueOrg.rep[0], Number(id))
+        () => getIssueDetail(selectedIssueOrg.org, selectedIssueOrg.rep, Number(id))
     );
     
+    /**
+     * Octokit과 useEffect를 이용하여 데이터 불러오기
+     * useEffect 안에서 fetch 함수를 한번 불러옴.
+     **/
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         const response = await octokit.rest.issues.get({
+    //             owner: "Angular",
+    //             repo: "Angular-cli",
+    //             issue_number: Number(id),
+    //         });
+    //         setIssueData(response.data as IIssueData);
+    //     };
+    //     fetchData();
+    // }, [id]);
+   
     useEffect(() => window.scrollTo(0, 0), []);
 
     return (<>

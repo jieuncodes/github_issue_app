@@ -7,9 +7,7 @@ interface ISelectedOrg {
     rep: string;
 };
 interface IIssueName {
-    id: number;
-    org: string;
-    rep: string[];
+    [key: string]: string[];
 };
 interface IUser {
     login: string;
@@ -34,33 +32,20 @@ const { persistAtom } = recoilPersist({
     storage: localStorage,
 });
 
-export const issueNameState = atom<IIssueName[]>({
+export const issueNameState = atom<IIssueName>({
     key: "issueName",
-    default: [
-        {
-            id: 0,
-            org: "reactjs",
-            rep: ["reactjs.org"],
-        },{
-            id: 1,
-            org: "Angular",
-            rep: ["angular", "components", "angular-cli"],
-        },{
-            id: 2,
-            org: "microsoft",
-            rep: ["TypeScript", "vscode"],
-        },{
-            id: 3,
-            org: "Redux",
-            rep: ["redux", "react-redux"],
-        },
-    ],
+    default: {
+        "reactjs": ["reactjs.org"],
+        "Angular": ["angular", "components", "angular-cli"],
+        "microsoft": ["TypeScript", "vscode"],
+        "Redux": ["redux", "react-redux"],
+    },
 });
 
 export const selectedOrgState = atom<ISelectedOrg>({
     key: "selectedOrg",
     default: {
-        setId: "1_1",
+        setId: "Angular_1",
         org: "Angular",
         rep: "components",
     },
