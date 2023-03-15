@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/github_issue_app/static/js/main.497c4355.js",
-    "index.html": "/github_issue_app/index.html",
-    "main.497c4355.js.map": "/github_issue_app/static/js/main.497c4355.js.map"
+    "main.js": "/jieuncodes/github_issue_app/static/js/main.b32987ca.js",
+    "index.html": "/jieuncodes/github_issue_app/index.html",
+    "main.b32987ca.js.map": "/jieuncodes/github_issue_app/static/js/main.b32987ca.js.map"
   },
   "entrypoints": [
-    "static/js/main.497c4355.js"
+    "static/js/main.b32987ca.js"
   ]
 }
