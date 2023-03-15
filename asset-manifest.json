@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/github_issue_app/static/js/main.460defdb.js",
+    "main.js": "/github_issue_app/static/js/main.cab34d2c.js",
     "index.html": "/github_issue_app/index.html",
-    "main.460defdb.js.map": "/github_issue_app/static/js/main.460defdb.js.map"
+    "main.cab34d2c.js.map": "/github_issue_app/static/js/main.cab34d2c.js.map"
   },
   "entrypoints": [
-    "static/js/main.460defdb.js"
+    "static/js/main.cab34d2c.js"
   ]
 }
