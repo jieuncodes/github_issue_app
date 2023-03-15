@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/github_issue_app/static/js/main.ffcda1f1.js",
+    "main.js": "/github_issue_app/static/js/main.cfc43eb2.js",
     "index.html": "/github_issue_app/index.html",
-    "main.ffcda1f1.js.map": "/github_issue_app/static/js/main.ffcda1f1.js.map"
+    "main.cfc43eb2.js.map": "/github_issue_app/static/js/main.cfc43eb2.js.map"
   },
   "entrypoints": [
-    "static/js/main.ffcda1f1.js"
+    "static/js/main.cfc43eb2.js"
   ]
 }
